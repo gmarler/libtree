@@ -1,5 +1,5 @@
 #
-# Linux specific
+# Solaris 11/Studio 12.2/Shared Library specific
 #
 MAKEFLAGS	+= --no-builtin-variables --no-print-directory
 
@@ -13,19 +13,19 @@ prefix		= /usr/local
 libdir		= $(prefix)/$(LIBDIR)
 incdir		= $(prefix)/include
 
-CC		= $(CROSS_COMPILE)gcc
-AR		= $(CROSS_COMPILE)ar
-RANLIB		= $(CROSS_COMPILE)ranlib
-INSTALL		= install
-LN		= ln
+CC		    = /opt/solstudio12.2/bin/cc
+AR		    = /usr/bin/ar
+RANLIB		= /usr/bin/ranlib
+INSTALL		= /usr/gnu/bin/install
+LN		    = /usr/gnu/bin/ln
 
-LIB		= libtree.a
-SHLIB		= libtree.so.$(MAJOR_VERSION).$(MINOR_VERSION)
+LIB		    = libtree.a
+SHLIB		  = libtree.so.$(MAJOR_VERSION).$(MINOR_VERSION)
 soname		= libtree.so.$(MAJOR_VERSION)
 
-ARFLAGS		= cr
-LDFLAGS		= -Wl,--version-script=libtree.map
-CFLAGS		= -g -Os
+ARFLAGS		  = cr
+LDFLAGS		  = -Wl,--version-script=libtree.map
+CFLAGS		  = -g -Os
 BASE_CFLAGS	= -std=c99 -Wall -Werror -Wno-unused-function -fpic
 ALL_CFLAGS	= $(BASE_CFLAGS) $(CFLAGS) $(EXTRA_CFLAGS)
 
