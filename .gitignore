@@ -3,4 +3,6 @@ libtree.so*
 libtree.pc
 TAGS
 cscope.out
-
+*.o
+a.out
+*.sw?
