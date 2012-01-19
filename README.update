@@ -1,0 +1,54 @@
+Acquired from: http://www.velocityreviews.com/forums/t727109-yet-another-binary-search-tree-library.html 
+
+Well I think the README should be rewritten...
+
+Let me try again.
+
+In your example, I think you tried to use an AVL tree to keep track of
+objects of type 'struct object'. In order to do so, 'struct object'
+must
+embed an AVL node whose type is 'struct avltree_node'.
+
+For example:
+
+struct object {
+/* ... */
+int key;
+struct avltree_node node;
+};
+
+Then to insert this object into an initialized tree, you do:
+
+struct object *obj;
+/* initialize 'obj' */
+obj->key = 4;
+avltree_insert(&obj->node, tree);
+
+Then later you need to search for the previously inserted object whose
+key is 4:
+
+struct object dummy = { .key = 4 };
+struct avltree_node *the_node;
+
+the_node = avltree_lookup(&dummy, tree);
+if (!the_node) {
+/* not found ! */
+...
+}
+/* found */
+
+As you noticed avltree_lookup() returns a pointer to 'struct
+avltree_node' (not struct object) that is a pointer that points to the
+member 'node' which belongs to the previously inserted object.
+
+Not really convenient at this point, but the library provides an
+helper
+that you can use to retrieve the object address:
+
+struct object *the_obj;
+the_obj = avltree_container_of(the_node, struct object , node);
+assert(the_obj->key == 4);
+
+Hope this example help clarify things.
+--
+Franck
